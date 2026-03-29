@@ -1,7 +1,7 @@
 from datetime import datetime
 
 class Host:
-    def __init__(self, address, name, port = 80):
+    def __init__(self, address:str, name: str, port = 80):
         self.address = address
         self.name = name
         self.is_alive = False

@@ -6,7 +6,7 @@ class BaseCheck:
         self.host = host
         self.result = None
 
-    def run(self):
+    def run(self) -> bool:
         raise NotImplementedError
 
 
