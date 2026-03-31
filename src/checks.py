@@ -1,6 +1,7 @@
 import logging
 import subprocess
 import socket
+import ssl
 class BaseCheck:
     def __init__(self, host):
         self.host = host
@@ -37,6 +38,19 @@ class PortCheck(BaseCheck):
             self.result = False
         finally:
             s.close()
+        return self.result
+
+
+class TLSCheck(BaseCheck):
+    def run(self)->bool:
+        context = ssl.create_default_context()
+        try:
+            with socket.create_connection((self.host.address, 443), timeout=3) as sock:
+                with context.wrap_socket(sock, server_hostname=self.host.address) as sock:
+                    self.result = True
+        except Exception as e:
+            logging.error(f"TLS check failed {self.host.address}: {e}")
+            self.result = False
         return self.result
 
 
