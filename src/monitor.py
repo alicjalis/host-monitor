@@ -33,6 +33,7 @@ def monitoring_loop(hosts_to_monitor: list[Host]):
                 port.run()
                 tls = TLSCheck(host)
                 tls.run()
+                host.tls_days_left = tls.days_left
                 host.update_status(ping.result)
                 reporter = Reporter([ping, port, tls])
                 reporter.report()

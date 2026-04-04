@@ -25,7 +25,8 @@ def get_hosts():
             "name": host.name,
             "address": host.address,
             "is_alive": host.is_alive,
-            "last_checked": str(host.last_checked)
+            "last_checked": str(host.last_checked),
+            "cert_expires_in_days": host.tls_days_left
         })
     return jsonify(result)
 

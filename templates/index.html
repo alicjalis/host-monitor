@@ -33,6 +33,7 @@
                 <th>Address</th>
                 <th>Status</th>
                 <th>Last Checked</th>
+                <th>Cert expires in</th>
             </tr>
         </thead>
         <tbody id="hosts-body">
@@ -51,6 +52,7 @@
                         <td>${host.address}</td>
                         <td>${host.is_alive ? 'UP' : 'DOWN'}</td>
                         <td>${host.last_checked}</td>
+                        <td>${host.cert_expires_in_days ?? 'N/A'}</td>
                     `;
                     tbody.appendChild(row);
                 });

@@ -7,6 +7,7 @@ class Host:
         self.is_alive = False
         self.port = port
         self.last_checked = None
+        self.tls_days_left = None
 
     def update_status(self, alive: bool):
         self.is_alive = alive
