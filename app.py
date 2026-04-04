@@ -1,10 +1,6 @@
 import threading
-import time
 from flask import Flask, jsonify
-from src.host import Host
-from src.checks import PingCheck, PortCheck, TLSCheck
-from src.reporter import Reporter
-from main import load_hosts_from_file
+from src.monitor import load_hosts_from_file, monitoring_loop
 import logging
 
 app = Flask(__name__)
@@ -14,27 +10,7 @@ logging.basicConfig(
         format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
 hosts_to_monitor = load_hosts_from_file("hosts.json")
-def monitoring_loop():
-    while True:
-        try:
-            for host in hosts_to_monitor:
-                logging.info(f"Monitoring {host.name}")
-                ping = PingCheck(host)
-                ping.run()
-                port = PortCheck(host)
-                port.run()
-                tls = TLSCheck(host)
-                tls.run()
-                host.update_status(ping.result)
-                reporter = Reporter([ping, port, tls])
-                reporter.report()
-
-            time.sleep(3)
-        except (KeyboardInterrupt, SystemExit):
-            print("\nGoodbye!")
-            break
-
-thread = threading.Thread(target=monitoring_loop, daemon=True)
+thread = threading.Thread(target=monitoring_loop, args=(hosts_to_monitor,), daemon=True)
 thread.start()
 
 @app.route('/')

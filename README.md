@@ -1,5 +1,5 @@
 # host-monitor
-Monitoring host monitoring tool written in Python.
+Host monitoring tool written in Python.
 
 Checks host availability via ping, open ports and TLS/SSL certificate validity.
 
