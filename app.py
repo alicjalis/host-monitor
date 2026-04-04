@@ -1,5 +1,5 @@
 import threading
-from flask import Flask, jsonify
+from flask import Flask, jsonify, render_template
 from src.monitor import load_hosts_from_file, monitoring_loop
 import logging
 
@@ -15,7 +15,7 @@ thread.start()
 
 @app.route('/')
 def home():
-    return "API!"
+    return render_template('index.html')
 
 @app.route('/api/hosts', methods=['GET'])
 def get_hosts():

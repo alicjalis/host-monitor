@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Host Monitor</title>
+    <style>
+    body {
+        font-family: sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 2rem;
+    }
+
+    table {
+        width: 100%;
+        max-width: 800px;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        padding: 0.75rem 1rem;
+        text-align: left;
+        border-bottom: 1px solid #444;
+    }
+</style>
+</head>
+<body>
+    <h1>Host Monitor</h1>
+    <table id="hosts-table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Address</th>
+                <th>Status</th>
+                <th>Last Checked</th>
+            </tr>
+        </thead>
+        <tbody id="hosts-body">
+        </tbody>
+    </table>
+
+    <script>
+        fetch('/api/hosts')
+            .then(response => response.json())
+            .then(data => {
+                const tbody = document.getElementById('hosts-body');
+                data.forEach(host => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${host.name}</td>
+                        <td>${host.address}</td>
+                        <td>${host.is_alive ? 'UP' : 'DOWN'}</td>
+                        <td>${host.last_checked}</td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            });
+        setInterval(() => location.reload(), 5000);
+    </script>
+</body>
+</html>
