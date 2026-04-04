@@ -5,10 +5,6 @@ from src.checks import PingCheck, PortCheck, TLSCheck
 from src.reporter import Reporter
 import logging
 
-logging.basicConfig(
-        filename='app.log',
-        level=logging.INFO,
-        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
 def load_hosts_from_file(filename: str) -> list[Host]:
     try:
@@ -27,25 +23,27 @@ def load_hosts_from_file(filename: str) -> list[Host]:
         return []
 
 
-hosts_to_monitor = load_hosts_from_file('hosts.json')
-if not hosts_to_monitor:
-    print("No hosts found")
-    exit(1)
+if __name__ == "__main__":
 
-while True:
-    try:
-        for host in hosts_to_monitor:
-            logging.info(f"Monitoring {host.name}")
-            ping = PingCheck(host)
-            ping.run()
-            port = PortCheck(host)
-            port.run()
-            tls = TLSCheck(host)
-            tls.run()
-            reporter = Reporter([ping, port, tls])
-            reporter.report()
+    hosts_to_monitor = load_hosts_from_file('hosts.json')
+    if not hosts_to_monitor:
+        print("No hosts found")
+        exit(1)
 
-        time.sleep(3)
-    except (KeyboardInterrupt, SystemExit):
-        print("\nGoodbye!")
-        break
+    while True:
+        try:
+            for host in hosts_to_monitor:
+                logging.info(f"Monitoring {host.name}")
+                ping = PingCheck(host)
+                ping.run()
+                port = PortCheck(host)
+                port.run()
+                tls = TLSCheck(host)
+                tls.run()
+                reporter = Reporter([ping, port, tls])
+                reporter.report()
+
+            time.sleep(3)
+        except (KeyboardInterrupt, SystemExit):
+            print("\nGoodbye!")
+            break

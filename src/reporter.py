@@ -1,6 +1,6 @@
 from typing import List
 
-from checks import BaseCheck
+from src.checks import BaseCheck
 
 
 class Reporter():

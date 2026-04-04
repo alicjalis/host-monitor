@@ -1,0 +1,32 @@
+[
+  {
+    "address": "8.8.8.8",
+    "name": "Google Public DNS",
+    "port": 53
+  },
+  {
+    "address": "google.com",
+    "name": "Google Main Page",
+    "port": 443
+  },
+  {
+    "address": "github.com",
+    "name": "GitHub Platform",
+    "port": 443
+  },
+  {
+    "address": "1.1.1.1",
+    "name": "Cloudflare DNS",
+    "port": 53
+  },
+  {
+    "address": "put.poznan.pl",
+    "name": "Politechnika Poznanska",
+    "port": 443
+  },
+  {
+    "address": "smtp.gmail.com",
+    "name": "Gmail SMTP Server",
+    "port": 587
+  }
+]
